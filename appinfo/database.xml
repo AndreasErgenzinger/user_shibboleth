@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+
+ <name>*dbname*</name>
+ <create>true</create>
+ <overwrite>false</overwrite>
+ <charset>utf8</charset>
+
+ <table>
+
+  <name>*dbprefix*shibboleth_user</name>
+
+  <description>Contains owncloud uids of shibboleth users that are not mapped to LDAP users.</description>
+
+  <declaration>
+
+   <field>
+    <name>owncloud_name</name>
+    <type>text</type>
+    <notnull>true</notnull>
+    <length>255</length>
+    <default></default>
+   </field>
+
+   <index>
+    <name>shibboleth_oc_name_index</name>
+    <unique>true</unique>
+    <field>
+     <name>owncloud_name</name>
+     <sorting>ascending</sorting>
+    </field>
+   </index>
+
+  </declaration>
+
+ </table>
+</database>

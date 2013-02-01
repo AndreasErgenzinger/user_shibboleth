@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<info>
+	<id>user_shibboleth</id>
+	<name>Shibboleth user authentication backend</name>
+	<description>Authenticate users via lazy Shibboleth authentication.</description>
+	<licence>AGPL</licence>
+	<author>Andreas Ergenzinger</author>
+	<require>4.9</require>
+	<shipped>true</shipped>
+	<types>
+		<prelogin/>
+		<authentication/>
+	</types>
+</info>
