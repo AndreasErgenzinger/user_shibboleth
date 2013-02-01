@@ -3,7 +3,7 @@ user_shibboleth
 
 ownCloud authentication app relying on the Shibboleth Service Provider
 
-This is work in progress and relies on a appropriately configured LDAP user backend.
+This is work in progress and relies on an appropriately configured LDAP user backend.
 
 The following line must be added to the .htaccess file in ownCloud's base directory:
 
