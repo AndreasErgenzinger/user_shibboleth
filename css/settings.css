@@ -1,10 +1,10 @@
-#ldap fieldset p label {
+#user_shibboleth fieldset label {
 	width: 20%;
 	max-width: 200px;
 	display: inline-block;
 }
 
-#ldap fieldset input {
-	width: 70%;
+#user_shibboleth fieldset input[type=text] {
+	width: 30%;
 	display: inline-block;
 }

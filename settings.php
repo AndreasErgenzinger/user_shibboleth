@@ -16,7 +16,7 @@
  *
  */
 
-$params = array('sessions_handler_url', 'session_initiator_location', 'logout_initiator_location');
+$params = array('sessions_handler_url', 'session_initiator_location', 'salt', 'ldap_mail_suffix');
 
 if($_POST) {
 	foreach($params as $param) {
@@ -34,9 +34,10 @@ foreach ($params as $param) {
 }
 
 // settings with default values
-$tmpl->assign( 'sessions_handler_url', OCP\Config::getAppValue('user_shibboleth', 'sessions_handler_url', 0));
-$tmpl->assign( 'session_initiator_location', OCP\Config::getAppValue('user_shibboleth', 'session_initiator_location', 0));
-$tmpl->assign( 'logout_initiator_location', OCP\Config::getAppValue('user_shibboleth', 'logout_initiator_location', 0));
+$tmpl->assign( 'sessions_handler_url', OCP\Config::getAppValue('user_shibboleth', 'sessions_handler_url', ''));
+$tmpl->assign( 'session_initiator_location', OCP\Config::getAppValue('user_shibboleth', 'session_initiator_location', ''));
+$tmpl->assign( 'salt', OCP\Config::getAppValue('user_shibboleth', 'salt', ''));
+$tmpl->assign( 'ldap_mail_suffix', OCP\Config::getAppValue('user_shibboleth', 'ldap_mail_suffix', ''));
 
 return $tmpl->fetchPage();
 

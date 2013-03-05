@@ -15,21 +15,49 @@
   <declaration>
 
    <field>
-    <name>owncloud_name</name>
+    <name>login_name</name>
     <type>text</type>
     <notnull>true</notnull>
-    <length>255</length>
+    <length>64</length>
+    <default></default>
+    <description>SHA256 hash of the user's salted PersistentID.</description>
+   </field>
+
+   <field>
+    <name>display_name</name>
+    <type>text</type>
+    <notnull>true</notnull>
+    <length>64</length>
+    <default></default>
+    <description>The user's email address (cropped if neccessary).</description>
+   </field>
+
+   <field>
+    <name>home_dir</name>
+    <type>text</type>
+    <notnull>true</notnull>
+    <length>128</length>
     <default></default>
    </field>
 
    <index>
-    <name>shibboleth_oc_name_index</name>
+    <name>shibboleth_login_name_index</name>
     <unique>true</unique>
     <field>
-     <name>owncloud_name</name>
+     <name>login_name</name>
      <sorting>ascending</sorting>
     </field>
    </index>
+
+   <index>
+    <name>shibboleth_display_name_index</name>
+    <unique>true</unique>
+    <field>
+     <name>display_name</name>
+     <sorting>ascending</sorting>
+    </field>
+   </index>
+
 
   </declaration>
 

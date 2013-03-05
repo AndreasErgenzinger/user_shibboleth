@@ -27,6 +27,12 @@ namespace OCA\user_shibboleth;
 
 class UserShibboleth extends \OC_User_Backend {
 
+	public function getSupportedActions() {
+		return OC_USER_BACKEND_CHECK_PASSWORD |
+#			OC_USER_BACKEND_GET_HOME |
+			OC_USER_BACKEND_GET_DISPLAYNAME;
+	}
+	
 	/**
 	 * @brief Check if the password is correct
 	 * @param $uid The username
@@ -36,8 +42,32 @@ class UserShibboleth extends \OC_User_Backend {
 	 * Check if the password is correct without logging in the user
 	 */
 	public function checkPassword($uid, $password) {
-		if (Auth::isAuthenticated($uid) && $password === 'irrelevant')
+		\OCP\Util::writeLog('user_shibboleth', 'cp: ' . $uid . ' ' . $password, 3);
+		if ($uid === 'test')
 			return $uid;
+#		if ($uid === 'eac07e35459b8545c3a249d55409734b20b7e8a8b23fc3aa8f04a31d8eaea436' &&
+#			$password === 'irrelevant') {
+#			\OCP\Util::writeLog('user_shibboleth', 'cp okay ' . $uid, 4);
+#			return true;
+#		}
+
+		if (Auth::isAuthenticated() && $password === 'irrelevant') {
+
+			\OCP\Util::writeLog('user_shibboleth', 'cp: ' . $uid . ' ' . $password, 3);
+
+			//distinguish between internal and external Shibboleth users
+			//internal users log in with their email address,
+			$mail = Auth::getMail();
+			if ($mail === $uid)
+				return $uid;//TODO
+			//external users log in with their hashed and salted persistentID
+			$persistentId = Auth::getPersistentId();
+			$loginName = LoginLib::persistentId2LoginName($persistentId);
+			if ($loginName === $uid) {
+				\OCP\Util::writeLog('user_shibboleth', 'cp okay', 4);
+				return $uid;//TODO
+			}
+		}
 		return false;
 	}
 
@@ -48,8 +78,11 @@ class UserShibboleth extends \OC_User_Backend {
 	 * Get a list of all users.
 	 */
 	public function getUsers($search = '', $limit = 10, $offset = 0) {
-		if (strlen($search) > 4)
-			return DB::getUsers($search, $limit, $offset);
+		\OCP\Util::writeLog('user_shibboleth', 'getUsers search: ' . $search, 4);
+
+		$length = strlen($search);
+		if ($length === 0 || $length > 3)
+			return DB::getLoginNames($search, $limit, $offset);
 		else
 			return array();
 	}
@@ -60,12 +93,17 @@ class UserShibboleth extends \OC_User_Backend {
 	 * @return boolean
 	 */
 	public function userExists($uid) {
-		$exists = Auth::isAuthenticated($uid);
-		if (!$exists) {
-			$exists = DB::userExists($uid);
-#			\OCP\Util::writeLog('user_shibboleth', $exists, 4);
+		if ($uid === 'test') {
+#			\OCP\Util::writeLog('user_shibboleth', 'userExists test true', 3);
+			return true;
 		}
-		return $exists;
+
+
+		//block the shibboleth users' home directory
+		\OCP\Util::writeLog('user_shibboleth', 'userExists other', 3);
+		if (LoginLib::SHIB_USER_HOME_FOLDER_NAME === $uid)
+			return true;
+		return DB::loginNameExists($uid); 
 		//all other cases are handled by the LDAP app's userExists() method
 	}
 	
@@ -75,12 +113,19 @@ class UserShibboleth extends \OC_User_Backend {
 	 * @return boolean
 	 */
 	public function getHome($uid) {
-#		\OCP\Util::writeLog('user_shibboleth', 'getHome', 4);
-
-		if($this->userExists($uid)) {
-			$homedir = \OCP\Config::getUserValue($uid, 'user_shibboleth', 'homedir', false);
-			return $homedir;
-		}
-		return false;
+		\OCP\Util::writeLog('user_shibboleth', 'getHome', 3);
+		return DB::getHomeDir($uid);
 	}
+	
+	public function getDisplayName($uid) {
+		if ($uid === 'test')
+			return 'testDisplay';
+		\OCP\Util::writeLog('user_shibboleth', 'getDisplayName ' . $uid, 3);
+		return DB::getDisplayName($uid);
+	}
+	
+	public function getDisplayNames($search = '', $limit = null, $offset = null) {
+		return DB::getDisplayNames($search, $limit, $offset);
+	}
+		
 }

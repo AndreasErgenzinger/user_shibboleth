@@ -23,22 +23,25 @@
 namespace OCA\user_shibboleth;
 
 class Auth {
-	
-	/**
-         * @brief get the REMOTE_USER environment variable
-         * @return the REMOTE_USER environment variable or FALSE, if
-	 * the variable has not been set via shibboleth authentication.
-	 * Requires "ShibUseHeaders On" in apache location configuration.
-         */
-	public static function getRemoteUser() {
-		if (isset($_SERVER['HTTP_SHIB_IDENTITY_PROVIDER']) &&
-			isset($_SERVER['REMOTE_USER'])) {
-			return $_SERVER['REMOTE_USER'];
+
+	public static function isAuthenticated() {
+		if (isset($_SERVER['Shib-Identity-Provider']) &&
+			$_SERVER['Shib-Identity-Provider'] !== '') {
+			return true;
 		}
 		return false;
 	}
 	
-	public static function isAuthenticated($uid) {
-		return self::getRemoteUser() === $uid;
-	}
+	public static function getMail() {//used by login.php
+                if (isset($_SERVER['mail']) && $_SERVER['mail'] !== '')
+                        return $_SERVER['mail'];
+                return false;
+        }
+	
+        public static function getPersistentId() {//used by login.php
+                if (isset($_SERVER['persistent-id']) && $_SERVER['persistent-id'] !== '')
+                        return $_SERVER['persistent-id'];
+                return false;
+        }
+
 }

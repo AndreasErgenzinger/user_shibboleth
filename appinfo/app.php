@@ -36,13 +36,10 @@ $entry = array(
 	'name' => 'Shibboleth Authentication'
 );
 
-//add hooks
-#OCP\Util::connectHook('OC_User', 'logout', 'OCA\user_shibboleth\UserShibbolethHooks', 'logout');
-
 //add javascript and css
 if (!OCP\User::isLoggedIn()) {
 	OCP\Util::addScript('user_shibboleth', 'shibboleth');
 	OCP\Util::addStyle('user_shibboleth', 'shibboleth');
-}# elseif (OCA\user_shibboleth\Auth::getRemoteUser()) {//logged in, with shibboleth
-#	 OCP\Util::addScript('user_shibboleth', 'logout');
-#}
+}
+OCP\Util::addStyle('user_shibboleth', 'settings');
+
