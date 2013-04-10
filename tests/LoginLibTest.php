@@ -22,4 +22,14 @@ class LoginLibTest extends PHPUnit_Framework_TestCase {
                 $this->assertFalse($ew);
 	}
 	
+	public function testCheckMailOrigin() {
+		$idp = 'https://idp.example.com/idp/test';
+		
+		$result = LoginLib::checkMailOrigin($idp, 'tom@example.com');
+		$this->assertTrue($result);
+		
+		$result = LoginLib::checkMailOrigin($idp, 'tom@example.com.ch'); 
+                $this->assertFalse($result);
+	}
 }
+?>

@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <info>
 	<id>user_shibboleth</id>
-	<name>Shibboleth user authentication backend</name>
-	<description>Authenticate users via lazy Shibboleth authentication.</description>
-	<licence>AGPL</licence>
+	<name>Shibboleth User Backend</name>
+	<description>Authenticate users via Shibboleth. Shibboleth users can be mapped to LDAP user accounts provided by the LDAP user and group backend. This mapping only works for users retrieved from the first configured LDAP server.
+	</description>
+	<licence>GNU GPLv3</licence>
 	<author>Andreas Ergenzinger</author>
-	<require>4.9</require>
-	<shipped>true</shipped>
+	<require>5.0</require>
 	<types>
 		<prelogin/>
 		<authentication/>

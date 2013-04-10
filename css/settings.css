@@ -1,10 +1,27 @@
-#user_shibboleth fieldset label {
+#user_shibboleth label {
 	width: 20%;
 	max-width: 200px;
 	display: inline-block;
 }
 
-#user_shibboleth fieldset input[type=text] {
+#user_shibboleth label.shib_check_box {
+        width: auto;
+        max-width: 100%;
+}
+
+#user_shibboleth input[type=text] {
 	width: 30%;
 	display: inline-block;
+}
+
+#user_shibboleth input[type=checkbox] {
+	vertical-align: middle;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+        margin-right: 10px;
+        display: inline-block;
+}
+
+#user_shibboleth input[type=submit] {
+	margin-top: 0.5em;
 }
