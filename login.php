@@ -55,9 +55,10 @@ if ($enabled && $sessionsHandlerUrl !== '' && $sessionInitiatorLocation !== '') 
 		}
 		
 		//distinguish between internal (those in the LDAP) and external Shibboleth users
-		$loginName = \OCA\user_shibboleth\LdapBackendAdapter::getUuid($mail);
+		$adapter = new \OCA\user_shibboleth\LdapBackendAdapter();
+		$loginName = $adapter->getUuid($mail);
 		if ($loginName) {//user is internal, backends are enabled, and user mapping is active
-			\OCA\user_shibboleth\LdapBackendAdapter::initializeUser($loginName);
+			$adapter->initializeUser($loginName);
 		} else {//user is external
 			//crop $mail to fit into display_name column of oc_shibboleth_user
 			if (strlen($mail) > 64) {
