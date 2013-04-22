@@ -5,6 +5,8 @@
 
 ###Deployment
 
+If you have downloaded the app folder as a zip file from github, rename the app folder from "user_shibboleth-master" to "user_shibboleth".
+
 Assuming a running configuration of Apache and the Shibboleth SP, some additional changes are required in order to protect the /owncloud location via [lazy Shibboleth authentication](https://aai-demo.switch.ch/lazy/).
 
 * Configuring Apache:
