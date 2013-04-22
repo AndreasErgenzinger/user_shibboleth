@@ -48,15 +48,25 @@ class DB {
 	
 	
 	public static function getLoginNames($partialLoginName, $limit, $offset) {//was getUsers
-		//prepare parameters for use in prepared statement
-		$partialLoginName = '%'.$partialLoginName.'%';
-		$limit = strval($limit);//might be 0, cast to string
-		$offset = strval($offset);//dito
-		
-		//run query 
-		$query = \OCP\DB::prepare('SELECT login_name FROM *PREFIX*shibboleth_user WHERE login_name LIKE ? LIMIT ? OFFSET ?');
-		$result = $query->execute(array( $partialLoginName, $limit, $offset));
+		//prepare and run query
+		if ($limit === 0) {
+			$limit = '0';
+		}
+		if ($offset === 0) {
+			$offset = '0';
+		}
+		$result;
+		if (strlen($partialLoginName) === 0) {
+			$query = \OCP\DB::prepare('SELECT login_name FROM *PREFIX*shibboleth_user LIMIT ? OFFSET ?');
+			$result = $query->execute(array($limit, $offset));
 
+		} else {
+			$partialLoginName = '%'.$partialLoginName.'%';
+			$query = \OCP\DB::prepare('SELECT login_name FROM *PREFIX*shibboleth_user WHERE login_name LIKE ? LIMIT ? OFFSET ?');
+			$result = $query->execute(array($partialLoginName, $limit, $offset));
+		}
+		
+		//return result
 		if (\OCP\DB::isError($result)) {
 			return false;
 		} else {
@@ -89,15 +99,25 @@ class DB {
 	}
 	
 	public static function getDisplayNames($partialDisplayName, $limit, $offset) {
-		//prepare parameters for use in prepared statement
-		$partialDisplayName = '%'.$partialDisplayName.'%';
-		$limit = strval($limit);//might be 0, cast to string
-		$offset = strval($offset);//ditto
+		//prepare and run query
+		if ($limit === 0) {
+			$limit = '0';
+		}
+		if ($offset === 0) {
+			$offset = '0';
+		}
+		$result;
+		if (strlen($partialDisplayName) === 0) {
+			$query = \OCP\DB::prepare('SELECT login_name, display_name FROM *PREFIX*shibboleth_user LIMIT ? OFFSET ?');
+			$result = $query->execute(array($limit, $offset));
+		}
+		 else {
+			$partialDisplayName = '%'.$partialDisplayName.'%';
+			$query = \OCP\DB::prepare('SELECT login_name, display_name FROM *PREFIX*shibboleth_user WHERE display_name LIKE ? LIMIT ? OFFSET ?');
+			$result = $query->execute(array($partialDisplayName, $limit, $offset));
+		}
 		
-		//run query
-		$query = \OCP\DB::prepare('SELECT login_name, display_name FROM *PREFIX*shibboleth_user WHERE display_name LIKE ? LIMIT ? OFFSET ?');
-		$result = $query->execute(array($partialDisplayName, $limit, $offset));
-		
+		//return result
 		if (!\OCP\DB::isError($result)) {
 			$rows = $result->fetchAll(\PDO::FETCH_ASSOC);
 			$array = array();
@@ -110,7 +130,7 @@ class DB {
 		}
 		return false;
 	}
-	
+
 	public static function addUser($loginName, $displayName, $homeDir) {
 		$query = \OCP\DB::prepare('INSERT INTO *PREFIX*shibboleth_user values(?, ?, ?)');
 		$result = $query->execute(array($loginName, $displayName, $homeDir));
