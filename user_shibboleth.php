@@ -43,7 +43,8 @@ class UserShibboleth extends \OC_User_Backend {
 			//distinguish between internal and external Shibboleth users
 			//internal users log in with their LDAP (entry)uuid,
 			$adapter = new LdapBackendAdapter();
-			if ($adapter->uuidExists($uid)) {
+			$mail = Auth::getMail();
+			if (($mail !== false) && ($adapter->getUuid($mail) === $uid)) {
 				return $uid;
 			}
 			//external users log in with their hashed persistentID

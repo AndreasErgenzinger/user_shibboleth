@@ -37,6 +37,8 @@ Assuming a running configuration of Apache and the Shibboleth SP, some additiona
     
     While you have the _shibboleth2.xml_ file open, write down the values of both the _handlerURL_ attribute of the _Sessions_ node and the _Location_ attribute of the _SessionInitiator_ node, as these must be specified on the app's settings menu.
 
+   The app requires two user attributes, _persistent-id_ and _mail_, so make sure that the nodes with those ids are uncommented in _/etc/shibboleth/attribute-map.xml_. 
+
 The __user_shibboleth__ app itself can be installed and enabled just like any other ownCloud app.
 
 Fill in the two transcribed values from the SP configuration file on the app settings page, save, and you are done.
@@ -50,3 +52,9 @@ To prevent internal users from creating secondary accounts, check the _Link to L
 The user mapping is based on the Shibboleth and LDAP mail attributes. This allows a malicious IdP to hijack mapped user accounts by authenticating users with spoofed email addresses. To prevent this and other kinds of user impersonation, it is __strongly recommended__ to check the _Enforce Domain Similarity_ checkbox. This way users whose email address domain part does not match the domain of their respective IdP are rejected.
 
 At the moment the internal user mapping feature only works with the first configured LDAP server.
+
+###Version History
+<pre>
+0.5        - mapping users to LDAP accounts 
+0.5.0.1  - improved LDAP user authentication
+</pre>
