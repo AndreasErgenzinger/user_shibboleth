@@ -74,18 +74,6 @@ class DB {
 		}
 	}
 	
-	
-	public static function loginOrDisplayNameExists($name) {
-		$query = \OCP\DB::prepare('SELECT COUNT(*) FROM *PREFIX*shibboleth_user WHERE login_name = ? OR display_name = ?');
-		$result = $query->execute(array($name, $name));
-	
-		if (!\OCP\DB::isError($result)) {
-			$count = $result->fetchAll(\PDO::FETCH_COLUMN, 0);
-			return $count[0] === 1;
-                }
-                return false;
-	}
-	
 	public static function getDisplayName($loginName) {
 		$query = \OCP\DB::prepare('SELECT display_name FROM *PREFIX*shibboleth_user WHERE login_name = ?');
 		$result = $query->execute(array($loginName));

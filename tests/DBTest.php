@@ -53,17 +53,6 @@ class DBTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($outcome);
 	}
 	
-	public function testLoginOrDisplayNameExists() {
-                $outcome = DB::loginOrDisplayNameExists(self::$userX['LoginName']);
-                $this->assertTrue($outcome);
-                $outcome = DB::loginOrDisplayNameExists(self::$userX['DisplayName']);
-                $this->assertTrue($outcome);
-		$outcome = DB::loginOrDisplayNameExists(self::$userZ['LoginName']);
-		$this->assertFalse($outcome);
-		$outcome = DB::loginOrDisplayNameExists(self::$userZ['DisplayName']);
-		$this->assertFalse($outcome);
-        }
-
 	public function testGetDisplayName() {
 		$displayName = DB::getDisplayName(self::$userX['LoginName']);
 		$this->assertEquals($displayName, self::$userX['DisplayName']);
