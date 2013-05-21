@@ -28,7 +28,7 @@ class DB {
 		
 		if (!\OCP\DB::isError($result)) {
 			$count = $result->fetchAll(\PDO::FETCH_COLUMN, 0); 
-			return $count[0] === 1;
+			return $count[0] == 1;//not all PHP/DBS combinations return result of type integer
 		}
 		return false;
 	}
