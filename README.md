@@ -55,6 +55,7 @@ At the moment the internal user mapping feature only works with the first config
 
 ###Version History
 <pre>
-0.5        - mapping users to LDAP accounts 
+0.5      - mapping users to LDAP accounts 
 0.5.0.1  - improved LDAP user authentication
+0.5.0.2  - accomodating PHP/DBS combinations returning SQL COUNT(*) as a string value
 </pre>
