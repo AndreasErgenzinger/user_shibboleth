@@ -36,7 +36,7 @@ $entry = array(
 
 //add login button
 $link = OCA\user_shibboleth\LoginLib::getForwardingPageUrl();
-$buttonText = 'Shibboleth Login';
+$buttonText = 'Shibboleth';
 $federationName = OCP\Config::getAppValue('user_shibboleth', 'federation_name', '');
 if ($federationName !== '') {
 	$buttonText .= ' – ' . $federationName;
