@@ -28,6 +28,10 @@ class Auth {
 			$_SERVER['Shib-Identity-Provider'] !== '') {
 			return $_SERVER['Shib-Identity-Provider'];
 		}
+		if (isset($_SERVER['Shib_Identity_Provider']) &&
+			$_SERVER['Shib_Identity_Provider'] !== '') {
+			return $_SERVER['Shib_Identity_Provider'];
+		}
 		return false;
 	}
 	
@@ -40,6 +44,8 @@ class Auth {
         public static function getPersistentId() {//used by login.php
                 if (isset($_SERVER['persistent-id']) && $_SERVER['persistent-id'] !== '')
                         return $_SERVER['persistent-id'];
+                if (isset($_SERVER['persistent_id']) && $_SERVER['persistent_id'] !== '')
+                        return $_SERVER['persistent_id'];
                 return false;
         }
 
