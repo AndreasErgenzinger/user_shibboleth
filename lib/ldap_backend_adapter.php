@@ -91,7 +91,8 @@ class LdapBackendAdapter {
 		
 		//retrieve UUID from LDAP server
 		$this->connect();
-		$filter = 'mail=' . $mail;
+		$attr = \OCP\Config::getAppValue('user_shibboleth', 'ldap_link_attribute', 'mail');
+		$filter = $attr . '=' . $mail;
                 $result = $this->ldap->fetchListOfUsers($filter, $this->connection->ldapUuidAttribute);
 
                 if (count($result) === 1 && $result[0]['count'] === 1) {

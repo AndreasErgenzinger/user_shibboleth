@@ -22,7 +22,7 @@ OC_Util::checkAdminUser();
 OCP\Util::addStyle('user_shibboleth', 'settings');
 OCP\Util::addScript('user_shibboleth', 'settings');
 
-$params = array('sessions_handler_url', 'session_initiator_location', 'federation_name', 'enforce_domain_similarity', 'link_to_ldap_backend', 'external_user_quota');
+$params = array('sessions_handler_url', 'session_initiator_location', 'federation_name', 'enforce_domain_similarity', 'link_to_ldap_backend', 'ldap_link_attribute', 'external_user_quota');
 
 if($_POST) {
 	foreach($params as $param) {
@@ -39,6 +39,7 @@ $tmpl->assign('session_initiator_location', OCP\Config::getAppValue('user_shibbo
 $tmpl->assign('federation_name', OCP\Config::getAppValue('user_shibboleth', 'federation_name', ''));
 $tmpl->assign('enforce_domain_similarity', OCP\Config::getAppValue('user_shibboleth', 'enforce_domain_similarity', '1'));
 $tmpl->assign('link_to_ldap_backend', OCP\Config::getAppValue('user_shibboleth', 'link_to_ldap_backend', '0'));
+$tmpl->assign('ldap_link_attribute', OCP\Config::getAppValue('user_shibboleth', 'ldap_link_attribute', 'mail'));
 $tmpl->assign('external_user_quota', OCP\Config::getAppValue('user_shibboleth', 'external_user_quota', ''));
 
 return $tmpl->fetchPage();

@@ -36,8 +36,9 @@ class Auth {
 	}
 	
 	public static function getMail() {//used by login.php
-                if (isset($_SERVER['mail']) && $_SERVER['mail'] !== '')
-                        return $_SERVER['mail'];
+		$attr = \OCP\Config::getAppValue('user_shibboleth', 'ldap_link_attribute', 'mail');
+                if (isset($_SERVER[$attr]) && $_SERVER[$attr] !== '')
+                        return $_SERVER[$attr];
                 return false;
         }
 	
