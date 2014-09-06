@@ -1,6 +1,8 @@
 #user_shibboleth
 
-**user_shibboleth** is an ownCloud (version 5.0+) user authentication app relying on the Shibboleth Service Provider.
+**user_shibboleth** is an ownCloud (version 5.0) user authentication app relying on the Shibboleth Service Provider. This app is no longer maintained, so compatibility with more recent ownCloud versions is very unlikely.
+
+At the current stage, this project is only intended to serve as a starting point for reimplementation and as an example for federated authentication in a PHP + Apache + mod_shib + Shibboleth2 environment, in general.
 
 
 ###Deployment
