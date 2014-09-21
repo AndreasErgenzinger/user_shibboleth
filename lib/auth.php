@@ -28,18 +28,25 @@ class Auth {
 			$_SERVER['Shib-Identity-Provider'] !== '') {
 			return $_SERVER['Shib-Identity-Provider'];
 		}
+		if (isset($_SERVER['Shib_Identity_Provider']) &&
+			$_SERVER['Shib_Identity_Provider'] !== '') {
+			return $_SERVER['Shib_Identity_Provider'];
+		}
 		return false;
 	}
 	
 	public static function getMail() {//used by login.php
-                if (isset($_SERVER['mail']) && $_SERVER['mail'] !== '')
-                        return $_SERVER['mail'];
+		$attr = \OCP\Config::getAppValue('user_shibboleth', 'ldap_link_attribute', 'mail');
+                if (isset($_SERVER[$attr]) && $_SERVER[$attr] !== '')
+                        return $_SERVER[$attr];
                 return false;
         }
 	
         public static function getPersistentId() {//used by login.php
                 if (isset($_SERVER['persistent-id']) && $_SERVER['persistent-id'] !== '')
                         return $_SERVER['persistent-id'];
+                if (isset($_SERVER['persistent_id']) && $_SERVER['persistent_id'] !== '')
+                        return $_SERVER['persistent_id'];
                 return false;
         }
 
